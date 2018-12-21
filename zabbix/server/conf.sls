@@ -4,7 +4,6 @@
 
 include:
   - zabbix.server
-  - zabbix.users
 
 
 {{ zabbix.server.config }}:
@@ -25,7 +24,7 @@ include:
       - service: zabbix-server
 
 
-{% if salt['grains.get']('os_family') == 'Debian' -%}
+{% if salt['grains.get']('os_family') == 'Debian' and 'zabbix-server-mysql' in zabbix.server.pkgs -%}
 # We don't want to manage the db through dbconfig
 zabbix-server_debconf:
   debconf.set:
